@@ -15,10 +15,22 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build API Docker Image') {
             steps {
-                withDockerRegistry(credentialsId: 'dockerhub-credentials', url: '') {
-                    sh 'docker build -t vanle96/halloween-respons:0.0.1 .'
+                script {
+                    dir('api') {
+                        sh 'docker build -t vanle96/api-image:latest .'
+                    }
+                }
+            }
+        }
+
+        stage('Build UI Docker Image') {
+            steps {
+                script {
+                    dir('ui') {
+                        sh 'docker build -t vanle96/ui-image:latest .'
+                    }
                 }
             }
         }
