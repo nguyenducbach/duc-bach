@@ -11,17 +11,17 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main', url: 'https://github.com/VanLeDinh96/nodejs-reactjs.git'
             }
         }
 
-        stage('Build') {
-            steps {
-                script {
-                    docker.build("${DOCKERHUB_REPO}:latest")
-                }
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         script {
+        //             docker.build("${DOCKERHUB_REPO}:latest")
+        //         }
+        //     }
+        // }
 
         // stage('Push') {
         //     steps {
@@ -40,17 +40,17 @@ pipeline {
         //     }
         // }
 
-        stage('Notify') {
-            steps {
-                emailext (
-                    subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
-                    body: "Build ${currentBuild.fullDisplayName} finished with status: ${currentBuild.currentResult}. Check console output at ${env.BUILD_URL} to view the results.",
-                    recipientProviders: [[$class: 'DevelopersRecipientProvider']],
-                    from: 'dinhvanle.it@gmail.com',
-                    to: 'yamatole312@gmail.com'
-                )
-            }
-        }
+        // stage('Notify') {
+        //     steps {
+        //         emailext (
+        //             subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+        //             body: "Build ${currentBuild.fullDisplayName} finished with status: ${currentBuild.currentResult}. Check console output at ${env.BUILD_URL} to view the results.",
+        //             recipientProviders: [[$class: 'DevelopersRecipientProvider']],
+        //             from: 'dinhvanle.it@gmail.com',
+        //             to: 'yamatole312@gmail.com'
+        //         )
+        //     }
+        // }
     }
 
     post {
