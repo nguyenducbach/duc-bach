@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
         EMAIL_CREDENTIALS_ID = 'gmail-credentials'
-        DOCKERHUB_REPO = 'vanle96/node-react-img'
+        DOCKERHUB_REPO = 'vanle96/halloween-respons'
         BRANCH_NAME = 'main'
     }
 
@@ -15,13 +15,13 @@ pipeline {
             }
         }
 
-        // stage('Build') {
-        //     steps {
-        //         script {
-        //             docker.build("${DOCKERHUB_REPO}:latest")
-        //         }
-        //     }
-        // }
+        stage('Build') {
+            steps {
+                script {
+                    docker.build("${DOCKERHUB_REPO}:0.0.1")
+                }
+            }
+        }
 
         // stage('Push') {
         //     steps {
