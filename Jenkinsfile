@@ -23,22 +23,22 @@ pipeline {
             }
         }
 
-        stage('Push') {
-            steps {
-                script {
-                    docker.withRegistry('', "${DOCKER_CREDENTIALS_ID}") {
-                        docker.image("${DOCKERHUB_REPO}:latest").push()
-                    }
-                }
-            }
-        }
+        // stage('Push') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry('', "${DOCKER_CREDENTIALS_ID}") {
+        //                 docker.image("${DOCKERHUB_REPO}:latest").push()
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Deploy') {
-            steps {
-                sh 'docker-compose down'
-                sh 'docker-compose up -d'
-            }
-        }
+        // stage('Deploy') {
+        //     steps {
+        //         sh 'docker-compose down'
+        //         sh 'docker-compose up -d'
+        //     }
+        // }
 
         stage('Notify') {
             steps {
