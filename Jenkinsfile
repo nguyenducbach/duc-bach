@@ -17,8 +17,8 @@ pipeline {
 
         stage('Build') {
             steps {
-                script {
-                    docker.build("${DOCKERHUB_REPO}:0.0.1")
+                withDockerRegistry(credentialsId: 'dockerhub-credentials', url: '') {
+                    sh 'docker build -t vanle96/halloween-respons:0.0.1 .'
                 }
             }
         }
