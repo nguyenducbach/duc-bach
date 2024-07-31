@@ -58,8 +58,8 @@ pipeline {
         //             subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
         //             body: "Build ${currentBuild.fullDisplayName} finished with status: ${currentBuild.currentResult}. Check console output at ${env.BUILD_URL} to view the results.",
         //             recipientProviders: [[$class: 'DevelopersRecipientProvider']],
-        //             from: 'dinhvanle.it@gmail.com',
-        //             to: 'yamatole312@gmail.com'
+        //             from: 'yamatole312@gmail.com',
+        //             to: 'dinhvanle.it@gmail.com'
         //         )
         //     }
         // }
