@@ -11,7 +11,9 @@ services:
     ports:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
-      - F:/devops/mysql:/var/lib/mysql
+      - type: bind
+        source: F:/devops/mysql
+        target: /var/lib/mysql
     networks:
       - backend
   
