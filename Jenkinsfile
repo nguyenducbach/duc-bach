@@ -24,27 +24,32 @@ pipeline {
             }
         }
 
-        stage('Build and Push Api Docker Image') {
+        stage('Build and Push API Docker Image') {
             steps {
                 script {
-                    docker.withRegistry(credentialsId: 'dockerhub-credentials', url: '') {
-                        sh 'docker build -t vanle96/tutorial-api:latest ./api'
-                        sh 'docker push vanle96/tutorial-api:latest'
+                    dir('api') {
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                            sh """
+                            docker build -t vanle96/api-image:latest .
+                            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+                            docker push vanle96/api-image:latest
+                            """
+                        }
                     }
                 }
             }
         }
 
-        stage('Build and Push Ui Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry(credentialsId: 'dockerhub-credentials', url: '') {
-                        sh 'docker build -t vanle96/tutorial-ui:latest ./ui'
-                        sh 'docker push vanle96/tutorial-ui:latest'
-                    }
-                }
-            }
-        }
+        // stage('Build and Push Ui Docker Image') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry(credentialsId: 'dockerhub-credentials', url: '') {
+        //                 sh 'docker build -t vanle96/tutorial-ui:latest ./ui'
+        //                 sh 'docker push vanle96/tutorial-ui:latest'
+        //             }
+        //         }
+        //     }
+        // }
 
         // stage('Push') {
         //     steps {
