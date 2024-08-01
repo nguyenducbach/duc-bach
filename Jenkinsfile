@@ -40,16 +40,21 @@ pipeline {
             }
         }
 
-        // stage('Build and Push Ui Docker Image') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry(credentialsId: 'dockerhub-credentials', url: '') {
-        //                 sh 'docker build -t vanle96/tutorial-ui:latest ./ui'
-        //                 sh 'docker push vanle96/tutorial-ui:latest'
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Build and Push UI Docker Image') {
+            steps {
+                script {
+                    dir('ui') {
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                            sh """
+                            docker build -t vanle96/ui-image:latest .
+                            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+                            docker push vanle96/ui-image:latest
+                            """
+                        }
+                    }
+                }
+            }
+        }
 
         // stage('Push') {
         //     steps {
