@@ -4,7 +4,6 @@ pipeline {
     environment {
         DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
         EMAIL_CREDENTIALS_ID = 'gmail-credentials'
-        DOCKERHUB_REPO = 'vanle96/halloween-respons'
         BRANCH_NAME = 'main'
     }
 
@@ -19,7 +18,7 @@ pipeline {
             steps {
                 script {
                     dir('api') {
-                        sh 'docker build -t vanle96/api-image:latest .'
+                        sh 'docker build -t vanle96/tutorial-api:latest .'
                     }
                 }
             }
@@ -29,7 +28,26 @@ pipeline {
             steps {
                 script {
                     dir('ui') {
-                        sh 'docker build -t vanle96/ui-image:latest .'
+                        sh 'docker build -t vanle96/tutorial-ui:latest .'
+                    }
+                }
+            }
+        }
+
+        stage('Push API Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry(credentialsId: 'dockerhub-credentials', url: '') {
+                        sh 'docker push vanle96/tutorial-api:latest'
+                    }
+                }
+            }
+        }
+        stage('Push UI Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry(credentialsId: 'dockerhub-credentials', url: '') {
+                        sh 'docker push vanle96/tutorial-ui:latest'
                     }
                 }
             }
