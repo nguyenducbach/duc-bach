@@ -14,39 +14,32 @@ pipeline {
             }
         }
 
-        stage('Build API Docker Image') {
+        stage('Login to Docker Hub') {
             steps {
                 script {
-                    dir('api') {
-                        sh 'docker build -t vanle96/tutorial-api:latest .'
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                        echo 'Logged in to Docker Hub'
                     }
                 }
             }
         }
 
-        stage('Build UI Docker Image') {
-            steps {
-                script {
-                    dir('ui') {
-                        sh 'docker build -t vanle96/tutorial-ui:latest .'
-                    }
-                }
-            }
-        }
-
-        stage('Push API Docker Image') {
+        stage('Build and Push Api Docker Image') {
             steps {
                 script {
                     docker.withRegistry(credentialsId: 'dockerhub-credentials', url: '') {
+                        sh 'docker build -t vanle96/tutorial-api:latest ./api'
                         sh 'docker push vanle96/tutorial-api:latest'
                     }
                 }
             }
         }
-        stage('Push UI Docker Image') {
+
+        stage('Build and Push Ui Docker Image') {
             steps {
                 script {
                     docker.withRegistry(credentialsId: 'dockerhub-credentials', url: '') {
+                        sh 'docker build -t vanle96/tutorial-ui:latest ./ui'
                         sh 'docker push vanle96/tutorial-ui:latest'
                     }
                 }
