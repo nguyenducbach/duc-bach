@@ -304,11 +304,11 @@ pipeline {
             steps {
                 sshagent (credentials: [SSH_CREDENTIALS_ID]) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} << 'EOF'
-                        docker-compose down
-                        docker-compose up -d
-                        EOF
-                        """
+                        ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} '
+                        docker-compose down;
+                        docker-compose up -d;
+                        '
+                    """
                 }
             }
             post {
