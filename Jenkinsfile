@@ -9,6 +9,9 @@ pipeline {
         API_IMAGE = 'api-image'
         UI_IMAGE = 'ui-image'
         RECIPIENTS = 'dinhvanle.it@gmail.com'
+        SSH_CREDENTIALS_ID = 'my-ssh-creds'
+        SSH_HOST = 'ec2-13-213-3-47.ap-southeast-1.compute.amazonaws.com'
+        SSH_USER = 'ec2-user'
     }
 
     stages {
@@ -298,8 +301,14 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker-compose down'
-                sh 'docker-compose up -d'
+                sshagent (credentials: [SSH_CREDENTIALS_ID]) {
+                    sh """
+                    ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} <<EOF
+                    docker-compose down
+                    docker-compose up -d
+                    EOF
+                    """
+                }
             }
             post {
                 success {
