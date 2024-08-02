@@ -18,15 +18,18 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/VanLeDinh96/nodejs-reactjs.git'
             }
             post {
-                success {
-                    always {
-                        mail bcc: '', body: 'Checkout stage completed.', cc: '', from: SENDER, replyTo: '', subject: 'Checkout Stage Notification', to: RECIPIENTS
-                    }
-                }
-                failure {
-                    always {
-                        mail bcc: '', body: 'Checkout stage failed.', cc: '', from: SENDER, replyTo: '', subject: 'Checkout Stage Notification', to: RECIPIENTS
-                    }
+                always {
+                    mail bcc: '', 
+                        body: "Checkout successfully.\n\n" +
+                            "Job name: ${env.JOB_NAME}\n" +
+                            "Build number: ${env.BUILD_NUMBER}\n" +
+                            "Current result: ${currentBuild.currentResult}\n" +
+                            "Detail: ${env.BUILD_URL}",
+                        cc: '', 
+                        from: '', 
+                        replyTo: '', 
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}", 
+                        to: RECIPIENTS
                 }
             }
         }
