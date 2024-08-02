@@ -20,12 +20,12 @@ pipeline {
             post {
                 success {
                     always {
-                        mail bcc: '', body: 'Checkout stage completed.', cc: '', from: SENDER, replyTo: '', subject: 'Checkout Stage Notification', to: EMAIL_RECIPIENTS
+                        mail bcc: '', body: 'Checkout stage completed.', cc: '', from: SENDER, replyTo: '', subject: 'Checkout Stage Notification', to: RECIPIENTS
                     }
                 }
                 failure {
                     always {
-                        mail bcc: '', body: 'Checkout stage failed.', cc: '', from: SENDER, replyTo: '', subject: 'Checkout Stage Notification', to: EMAIL_RECIPIENTS
+                        mail bcc: '', body: 'Checkout stage failed.', cc: '', from: SENDER, replyTo: '', subject: 'Checkout Stage Notification', to: RECIPIENTS
                     }
                 }
             }
@@ -39,24 +39,24 @@ pipeline {
                     }
                 }
             }
-            post {
-                success {
-                    emailext(
-                        subject: "Docker Hub Login Success",
-                        body: "Logged in to Docker Hub successfully.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
-                }
-                failure {
-                    emailext(
-                        subject: "Docker Hub Login Failed",
-                        body: "Failed to log in to Docker Hub. Please check the logs.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
-                }
-            }
+            // post {
+            //     success {
+            //         emailext(
+            //             subject: "Docker Hub Login Success",
+            //             body: "Logged in to Docker Hub successfully.",
+            //             from: SENDER,
+            //             to: RECIPIENTS
+            //         )
+            //     }
+            //     failure {
+            //         emailext(
+            //             subject: "Docker Hub Login Failed",
+            //             body: "Failed to log in to Docker Hub. Please check the logs.",
+            //             from: SENDER,
+            //             to: RECIPIENTS
+            //         )
+            //     }
+            // }
         }
 
         stage('Check and Delete API Docker Image') {
@@ -79,24 +79,24 @@ pipeline {
                     }
                 }
             }
-            post {
-                success {
-                    emailext(
-                        subject: "API Image Check and Delete Success",
-                        body: "The API Docker image check and delete stage completed successfully.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
-                }
-                failure {
-                    emailext(
-                        subject: "API Image Check and Delete Failed",
-                        body: "The API Docker image check and delete stage failed. Please check the logs.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
-                }
-            }
+            // post {
+            //     success {
+            //         emailext(
+            //             subject: "API Image Check and Delete Success",
+            //             body: "The API Docker image check and delete stage completed successfully.",
+            //             from: SENDER,
+            //             to: RECIPIENTS
+            //         )
+            //     }
+            //     failure {
+            //         emailext(
+            //             subject: "API Image Check and Delete Failed",
+            //             body: "The API Docker image check and delete stage failed. Please check the logs.",
+            //             from: SENDER,
+            //             to: RECIPIENTS
+            //         )
+            //     }
+            // }
         }
 
         stage('Build and Push API Docker Image') {
@@ -113,24 +113,24 @@ pipeline {
                     }
                 }
             }
-            post {
-                success {
-                    emailext(
-                        subject: "API Docker Image Build and Push Success",
-                        body: "The API Docker image was built and pushed successfully.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
-                }
-                failure {
-                    emailext(
-                        subject: "API Docker Image Build and Push Failed",
-                        body: "The API Docker image build and push stage failed. Please check the logs.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
-                }
-            }
+            // post {
+            //     success {
+            //         emailext(
+            //             subject: "API Docker Image Build and Push Success",
+            //             body: "The API Docker image was built and pushed successfully.",
+            //             from: SENDER,
+            //             to: RECIPIENTS
+            //         )
+            //     }
+            //     failure {
+            //         emailext(
+            //             subject: "API Docker Image Build and Push Failed",
+            //             body: "The API Docker image build and push stage failed. Please check the logs.",
+            //             from: SENDER,
+            //             to: RECIPIENTS
+            //         )
+            //     }
+            // }
         }
 
         stage('Check and Delete UI Docker Image') {
@@ -153,24 +153,24 @@ pipeline {
                     }
                 }
             }
-            post {
-                success {
-                    emailext(
-                        subject: "UI Image Check and Delete Success",
-                        body: "The UI Docker image check and delete stage completed successfully.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
-                }
-                failure {
-                    emailext(
-                        subject: "UI Image Check and Delete Failed",
-                        body: "The UI Docker image check and delete stage failed. Please check the logs.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
-                }
-            }
+            // post {
+            //     success {
+            //         emailext(
+            //             subject: "UI Image Check and Delete Success",
+            //             body: "The UI Docker image check and delete stage completed successfully.",
+            //             from: SENDER,
+            //             to: RECIPIENTS
+            //         )
+            //     }
+            //     failure {
+            //         emailext(
+            //             subject: "UI Image Check and Delete Failed",
+            //             body: "The UI Docker image check and delete stage failed. Please check the logs.",
+            //             from: SENDER,
+            //             to: RECIPIENTS
+            //         )
+            //     }
+            // }
         }
 
         stage('Build and Push UI Docker Image') {
@@ -187,24 +187,24 @@ pipeline {
                     }
                 }
             }
-            post {
-                success {
-                    emailext(
-                        subject: "UI Docker Image Build and Push Success",
-                        body: "The UI Docker image was built and pushed successfully.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
-                }
-                failure {
-                    emailext(
-                        subject: "UI Docker Image Build and Push Failed",
-                        body: "The UI Docker image build and push stage failed. Please check the logs.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
-                }
-            }
+            // post {
+            //     success {
+            //         emailext(
+            //             subject: "UI Docker Image Build and Push Success",
+            //             body: "The UI Docker image was built and pushed successfully.",
+            //             from: SENDER,
+            //             to: RECIPIENTS
+            //         )
+            //     }
+            //     failure {
+            //         emailext(
+            //             subject: "UI Docker Image Build and Push Failed",
+            //             body: "The UI Docker image build and push stage failed. Please check the logs.",
+            //             from: SENDER,
+            //             to: RECIPIENTS
+            //         )
+            //     }
+            // }
         }
 
         stage('Notify') {
