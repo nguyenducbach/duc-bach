@@ -353,7 +353,7 @@ pipeline {
 
         stage('Deploy UI') {
             steps {
-                sshagent (credentials: [SSH_CREDENTIALS_ID]) {
+                sshagent (credentials: [SSH_CREDENTIALS_FE_ID]) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST_FE} '
                             docker pull ${DOCKERHUB_REPO}/${UI_IMAGE}:latest;
