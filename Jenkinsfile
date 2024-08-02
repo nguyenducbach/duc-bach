@@ -22,6 +22,7 @@ pipeline {
                     emailext(
                         subject: "Checkout Stage Success",
                         body: "The Checkout stage completed successfully.",
+                        from: SENDER,
                         to: RECIPIENTS
                     )
                 }
@@ -29,6 +30,7 @@ pipeline {
                     emailext(
                         subject: "Checkout Stage Failed",
                         body: "The Checkout stage failed. Please check the logs.",
+                        from: SENDER,
                         to: RECIPIENTS
                     )
                 }
@@ -48,6 +50,7 @@ pipeline {
                     emailext(
                         subject: "Docker Hub Login Success",
                         body: "Logged in to Docker Hub successfully.",
+                        from: SENDER,
                         to: RECIPIENTS
                     )
                 }
@@ -55,6 +58,7 @@ pipeline {
                     emailext(
                         subject: "Docker Hub Login Failed",
                         body: "Failed to log in to Docker Hub. Please check the logs.",
+                        from: SENDER,
                         to: RECIPIENTS
                     )
                 }
