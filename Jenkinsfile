@@ -19,20 +19,14 @@ pipeline {
             }
             post {
                 success {
-                    emailext(
-                        subject: "Checkout Stage Success",
-                        body: "The Checkout stage completed successfully.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
+                    always {
+                        mail bcc: '', body: 'Checkout stage completed.', cc: '', from: '', replyTo: '', subject: 'Checkout Stage Notification', to: EMAIL_RECIPIENTS
+                    }
                 }
                 failure {
-                    emailext(
-                        subject: "Checkout Stage Failed",
-                        body: "The Checkout stage failed. Please check the logs.",
-                        from: SENDER,
-                        to: RECIPIENTS
-                    )
+                    always {
+                        mail bcc: '', body: 'Checkout stage failed.', cc: '', from: '', replyTo: '', subject: 'Checkout Stage Notification', to: EMAIL_RECIPIENTS
+                    }
                 }
             }
         }
