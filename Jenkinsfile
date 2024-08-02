@@ -22,7 +22,6 @@ pipeline {
                     emailext(
                         subject: "Checkout Stage Success",
                         body: "The Checkout stage completed successfully.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -31,7 +30,6 @@ pipeline {
                     emailext(
                         subject: "Checkout Stage Failed",
                         body: "The Checkout stage failed. Please check the logs.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -52,7 +50,6 @@ pipeline {
                     emailext(
                         subject: "Docker Hub Login Success",
                         body: "Logged in to Docker Hub successfully.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -61,7 +58,6 @@ pipeline {
                     emailext(
                         subject: "Docker Hub Login Failed",
                         body: "Failed to log in to Docker Hub. Please check the logs.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -94,7 +90,6 @@ pipeline {
                     emailext(
                         subject: "API Image Check and Delete Success",
                         body: "The API Docker image check and delete stage completed successfully.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -103,7 +98,6 @@ pipeline {
                     emailext(
                         subject: "API Image Check and Delete Failed",
                         body: "The API Docker image check and delete stage failed. Please check the logs.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -130,7 +124,6 @@ pipeline {
                     emailext(
                         subject: "API Docker Image Build and Push Success",
                         body: "The API Docker image was built and pushed successfully.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -139,7 +132,6 @@ pipeline {
                     emailext(
                         subject: "API Docker Image Build and Push Failed",
                         body: "The API Docker image build and push stage failed. Please check the logs.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -172,7 +164,6 @@ pipeline {
                     emailext(
                         subject: "UI Image Check and Delete Success",
                         body: "The UI Docker image check and delete stage completed successfully.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -181,7 +172,6 @@ pipeline {
                     emailext(
                         subject: "UI Image Check and Delete Failed",
                         body: "The UI Docker image check and delete stage failed. Please check the logs.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -208,7 +198,6 @@ pipeline {
                     emailext(
                         subject: "UI Docker Image Build and Push Success",
                         body: "The UI Docker image was built and pushed successfully.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -217,7 +206,6 @@ pipeline {
                     emailext(
                         subject: "UI Docker Image Build and Push Failed",
                         body: "The UI Docker image build and push stage failed. Please check the logs.",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
                         from: SENDER,
                         to: RECIPIENTS
                     )
@@ -230,7 +218,6 @@ pipeline {
                 emailext (
                     subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
                     body: "Build ${currentBuild.fullDisplayName} finished with status: ${currentBuild.currentResult}. Check console output at ${env.BUILD_URL} to view the results.",
-                    recipientProviders: [[$class: 'DevelopersRecipientProvider']],
                     from: SENDER,
                     to: RECIPIENTS
                 )
