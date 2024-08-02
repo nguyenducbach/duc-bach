@@ -8,12 +8,34 @@ pipeline {
         DOCKERHUB_REPO = 'vanle96'
         API_IMAGE = 'api-image'
         UI_IMAGE = 'ui-image'
+        SENDER = 'yamatole312@gmail.com'
+        RECIPIENTS = 'dinhvanle.it@gmail.com'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/VanLeDinh96/nodejs-reactjs.git'
+            }
+            post {
+                success {
+                    emailext(
+                        subject: "Checkout Stage Success",
+                        body: "The Checkout stage completed successfully.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    emailext(
+                        subject: "Checkout Stage Failed",
+                        body: "The Checkout stage failed. Please check the logs.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
+                }
             }
         }
 
@@ -23,6 +45,26 @@ pipeline {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
                         echo 'Logged in to Docker Hub'
                     }
+                }
+            }
+            post {
+                success {
+                    emailext(
+                        subject: "Docker Hub Login Success",
+                        body: "Logged in to Docker Hub successfully.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    emailext(
+                        subject: "Docker Hub Login Failed",
+                        body: "Failed to log in to Docker Hub. Please check the logs.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
                 }
             }
         }
@@ -47,6 +89,26 @@ pipeline {
                     }
                 }
             }
+            post {
+                success {
+                    emailext(
+                        subject: "API Image Check and Delete Success",
+                        body: "The API Docker image check and delete stage completed successfully.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    emailext(
+                        subject: "API Image Check and Delete Failed",
+                        body: "The API Docker image check and delete stage failed. Please check the logs.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
+                }
+            }
         }
 
         stage('Build and Push API Docker Image') {
@@ -61,6 +123,26 @@ pipeline {
                             """
                         }
                     }
+                }
+            }
+            post {
+                success {
+                    emailext(
+                        subject: "API Docker Image Build and Push Success",
+                        body: "The API Docker image was built and pushed successfully.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    emailext(
+                        subject: "API Docker Image Build and Push Failed",
+                        body: "The API Docker image build and push stage failed. Please check the logs.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
                 }
             }
         }
@@ -85,6 +167,26 @@ pipeline {
                     }
                 }
             }
+            post {
+                success {
+                    emailext(
+                        subject: "UI Image Check and Delete Success",
+                        body: "The UI Docker image check and delete stage completed successfully.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    emailext(
+                        subject: "UI Image Check and Delete Failed",
+                        body: "The UI Docker image check and delete stage failed. Please check the logs.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
+                }
+            }
         }
 
         stage('Build and Push UI Docker Image') {
@@ -101,12 +203,25 @@ pipeline {
                     }
                 }
             }
-        }
-
-        stage('Deploy') {
-            steps {
-                sh 'docker-compose down'
-                sh 'docker-compose up -d'
+            post {
+                success {
+                    emailext(
+                        subject: "UI Docker Image Build and Push Success",
+                        body: "The UI Docker image was built and pushed successfully.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    emailext(
+                        subject: "UI Docker Image Build and Push Failed",
+                        body: "The UI Docker image build and push stage failed. Please check the logs.",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'CulpritsRecipientProvider']],
+                        from: SENDER,
+                        to: RECIPIENTS
+                    )
+                }
             }
         }
 
@@ -116,8 +231,8 @@ pipeline {
                     subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
                     body: "Build ${currentBuild.fullDisplayName} finished with status: ${currentBuild.currentResult}. Check console output at ${env.BUILD_URL} to view the results.",
                     recipientProviders: [[$class: 'DevelopersRecipientProvider']],
-                    from: 'yamatole312@gmail.com',
-                    to: 'dinhvanle.it@gmail.com'
+                    from: SENDER,
+                    to: RECIPIENTS
                 )
             }
         }
