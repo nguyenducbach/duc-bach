@@ -20,12 +20,12 @@ pipeline {
             post {
                 success {
                     always {
-                        mail bcc: '', body: 'Checkout stage completed.', cc: '', from: '', replyTo: '', subject: 'Checkout Stage Notification', to: EMAIL_RECIPIENTS
+                        mail bcc: '', body: 'Checkout stage completed.', cc: '', from: SENDER, replyTo: '', subject: 'Checkout Stage Notification', to: EMAIL_RECIPIENTS
                     }
                 }
                 failure {
                     always {
-                        mail bcc: '', body: 'Checkout stage failed.', cc: '', from: '', replyTo: '', subject: 'Checkout Stage Notification', to: EMAIL_RECIPIENTS
+                        mail bcc: '', body: 'Checkout stage failed.', cc: '', from: SENDER, replyTo: '', subject: 'Checkout Stage Notification', to: EMAIL_RECIPIENTS
                     }
                 }
             }
