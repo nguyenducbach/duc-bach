@@ -296,6 +296,45 @@ pipeline {
             }
         }
 
+        stage('Deploy') {
+            steps {
+                sh 'docker-compose down'
+                sh 'docker-compose up -d'
+            }
+            post {
+                success {
+                    mail(
+                        bcc: '',
+                        body: """Deploy successfully.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    mail(
+                        bcc: '',
+                        body: """Deploy failed.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+            }
+        }
+
         stage('Notify') {
             steps {
                 always {
