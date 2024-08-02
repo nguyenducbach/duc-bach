@@ -304,14 +304,14 @@ pipeline {
             steps {
                 sshagent (credentials: [SSH_CREDENTIALS_ID]) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} '
-                        echo "Current directory:";
-                        pwd;
-                        echo "List of files:";
-                        ls -la;
-                        docker-compose down;
-                        docker-compose up -d;
-                        '
+                        ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} << 'EOF'
+                            docker pull ${DOCKERHUB_REPO}/${API_IMAGE}:latest
+                            
+                            docker stop api-container || true
+                            docker rm api-container || true
+                            
+                            docker run -d --name api-container ${DOCKERHUB_REPO}/${API_IMAGE}:latest
+                        EOF
                     """
                 }
             }
