@@ -58,6 +58,7 @@ pipeline {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
                         echo 'Logged in to Docker Hub'
+                        echo 'test'
                     }
                 }
             }
