@@ -8,7 +8,6 @@ pipeline {
         DOCKERHUB_REPO = 'vanle96'
         API_IMAGE = 'api-image'
         UI_IMAGE = 'ui-image'
-        SENDER = 'yamatole312@gmail.com'
         RECIPIENTS = 'dinhvanle.it@gmail.com'
     }
 
@@ -19,17 +18,19 @@ pipeline {
             }
             post {
                 always {
-                    mail bcc: '', 
-                        body: "Checkout successfully.\n\n" +
-                            "Job name: ${env.JOB_NAME}\n" +
-                            "Build number: ${env.BUILD_NUMBER}\n" +
-                            "Current result: ${currentBuild.currentResult}\n" +
-                            "Detail: ${env.BUILD_URL}",
-                        cc: '', 
-                        from: '', 
-                        replyTo: '', 
-                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}", 
+                    mail(
+                        bcc: '',
+                        body: """Checkout successfully.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                         to: RECIPIENTS
+                    )
                 }
             }
         }
