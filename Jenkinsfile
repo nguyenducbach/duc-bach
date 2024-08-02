@@ -10,7 +10,9 @@ pipeline {
         UI_IMAGE = 'ui-image'
         RECIPIENTS = 'dinhvanle.it@gmail.com'
         SSH_CREDENTIALS_ID = 'my-ssh-creds'
+        SSH_CREDENTIALS_FE_ID = 'my-ssh-fe-creds'
         SSH_HOST = 'ec2-13-213-3-47.ap-southeast-1.compute.amazonaws.com'
+        SSH_HOST_FE = 'ec2-18-142-56-209.ap-southeast-1.compute.amazonaws.com'
         SSH_USER = 'ec2-user'
     }
 
@@ -300,7 +302,7 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
+        stage('Deploy API') {
             steps {
                 sshagent (credentials: [SSH_CREDENTIALS_ID]) {
                     sh """
@@ -319,7 +321,7 @@ pipeline {
                 success {
                     mail(
                         bcc: '',
-                        body: """Deploy successfully.
+                        body: """Deploy API successfully.
                         Job name: ${env.JOB_NAME}
                         Build number: ${env.BUILD_NUMBER}
                         Current result: ${currentBuild.currentResult}
@@ -334,7 +336,56 @@ pipeline {
                 failure {
                     mail(
                         bcc: '',
-                        body: """Deploy failed.
+                        body: """Deploy API failed.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+            }
+        }
+
+        stage('Deploy UI') {
+            steps {
+                sshagent (credentials: [SSH_CREDENTIALS_ID]) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST_FE} '
+                            docker pull ${DOCKERHUB_REPO}/${UI_IMAGE}:latest;
+                            if [ \$(docker ps -a -q -f name=ui-container) ]; then
+                                docker stop ui-container;
+                                docker rm ui-container;
+                            fi;
+                            docker run -d --name ui-container ${DOCKERHUB_REPO}/${UI_IMAGE}:latest;
+                        '
+                    """
+                }
+            }
+            post {
+                success {
+                    mail(
+                        bcc: '',
+                        body: """Deploy UI successfully.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    mail(
+                        bcc: '',
+                        body: """Deploy UI failed.
                         Job name: ${env.JOB_NAME}
                         Build number: ${env.BUILD_NUMBER}
                         Current result: ${currentBuild.currentResult}
