@@ -17,10 +17,25 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/VanLeDinh96/nodejs-reactjs.git'
             }
             post {
-                always {
+                success {
                     mail(
                         bcc: '',
                         body: """Checkout successfully.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    mail(
+                        bcc: '',
+                        body: """Checkout failed.
                         Job name: ${env.JOB_NAME}
                         Build number: ${env.BUILD_NUMBER}
                         Current result: ${currentBuild.currentResult}
@@ -43,24 +58,38 @@ pipeline {
                     }
                 }
             }
-            // post {
-            //     success {
-            //         emailext(
-            //             subject: "Docker Hub Login Success",
-            //             body: "Logged in to Docker Hub successfully.",
-            //             from: SENDER,
-            //             to: RECIPIENTS
-            //         )
-            //     }
-            //     failure {
-            //         emailext(
-            //             subject: "Docker Hub Login Failed",
-            //             body: "Failed to log in to Docker Hub. Please check the logs.",
-            //             from: SENDER,
-            //             to: RECIPIENTS
-            //         )
-            //     }
-            // }
+            post {
+                success {
+                    mail(
+                        bcc: '',
+                        body: """Login to Dockerhub successfully.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    mail(
+                        bcc: '',
+                        body: """Login to Dockerhub failed.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+            }
         }
 
         stage('Check and Delete API Docker Image') {
@@ -83,24 +112,38 @@ pipeline {
                     }
                 }
             }
-            // post {
-            //     success {
-            //         emailext(
-            //             subject: "API Image Check and Delete Success",
-            //             body: "The API Docker image check and delete stage completed successfully.",
-            //             from: SENDER,
-            //             to: RECIPIENTS
-            //         )
-            //     }
-            //     failure {
-            //         emailext(
-            //             subject: "API Image Check and Delete Failed",
-            //             body: "The API Docker image check and delete stage failed. Please check the logs.",
-            //             from: SENDER,
-            //             to: RECIPIENTS
-            //         )
-            //     }
-            // }
+            post {
+                success {
+                    mail(
+                        bcc: '',
+                        body: """Check and Delete API Docker Image successfully.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    mail(
+                        bcc: '',
+                        body: """Check and Delete API Docker Image failed.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+            }
         }
 
         stage('Build and Push API Docker Image') {
@@ -117,24 +160,38 @@ pipeline {
                     }
                 }
             }
-            // post {
-            //     success {
-            //         emailext(
-            //             subject: "API Docker Image Build and Push Success",
-            //             body: "The API Docker image was built and pushed successfully.",
-            //             from: SENDER,
-            //             to: RECIPIENTS
-            //         )
-            //     }
-            //     failure {
-            //         emailext(
-            //             subject: "API Docker Image Build and Push Failed",
-            //             body: "The API Docker image build and push stage failed. Please check the logs.",
-            //             from: SENDER,
-            //             to: RECIPIENTS
-            //         )
-            //     }
-            // }
+            post {
+                success {
+                    mail(
+                        bcc: '',
+                        body: """Build and Push API Docker Image successfully.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    mail(
+                        bcc: '',
+                        body: """Build and Push API Docker Image failed.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+            }
         }
 
         stage('Check and Delete UI Docker Image') {
@@ -157,24 +214,38 @@ pipeline {
                     }
                 }
             }
-            // post {
-            //     success {
-            //         emailext(
-            //             subject: "UI Image Check and Delete Success",
-            //             body: "The UI Docker image check and delete stage completed successfully.",
-            //             from: SENDER,
-            //             to: RECIPIENTS
-            //         )
-            //     }
-            //     failure {
-            //         emailext(
-            //             subject: "UI Image Check and Delete Failed",
-            //             body: "The UI Docker image check and delete stage failed. Please check the logs.",
-            //             from: SENDER,
-            //             to: RECIPIENTS
-            //         )
-            //     }
-            // }
+            post {
+                success {
+                    mail(
+                        bcc: '',
+                        body: """Check and Delete UI Docker Image successfully.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    mail(
+                        bcc: '',
+                        body: """Check and Delete UI Docker Image failed.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+            }
         }
 
         stage('Build and Push UI Docker Image') {
@@ -191,34 +262,55 @@ pipeline {
                     }
                 }
             }
-            // post {
-            //     success {
-            //         emailext(
-            //             subject: "UI Docker Image Build and Push Success",
-            //             body: "The UI Docker image was built and pushed successfully.",
-            //             from: SENDER,
-            //             to: RECIPIENTS
-            //         )
-            //     }
-            //     failure {
-            //         emailext(
-            //             subject: "UI Docker Image Build and Push Failed",
-            //             body: "The UI Docker image build and push stage failed. Please check the logs.",
-            //             from: SENDER,
-            //             to: RECIPIENTS
-            //         )
-            //     }
-            // }
+            post {
+                success {
+                    mail(
+                        bcc: '',
+                        body: """Build and Push UI Docker successfully.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+                failure {
+                    mail(
+                        bcc: '',
+                        body: """Build and Push UI Docker failed.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
+                }
+            }
         }
 
         stage('Notify') {
-            steps {
-                emailext (
-                    subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
-                    body: "Build ${currentBuild.fullDisplayName} finished with status: ${currentBuild.currentResult}. Check console output at ${env.BUILD_URL} to view the results.",
-                    from: SENDER,
-                    to: RECIPIENTS
-                )
+            always {
+                mail(
+                        bcc: '',
+                        body: """Build successfully.
+                        Job name: ${env.JOB_NAME}
+                        Build number: ${env.BUILD_NUMBER}
+                        Current result: ${currentBuild.currentResult}
+                        Detail: ${env.BUILD_URL}""",
+                        cc: '',
+                        from: '',
+                        replyTo: '',
+                        subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                        to: RECIPIENTS
+                    )
             }
         }
     }
