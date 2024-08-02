@@ -297,8 +297,9 @@ pipeline {
         }
 
         stage('Notify') {
-            always {
-                mail(
+            steps {
+                always {
+                    mail (
                         bcc: '',
                         body: """Build successfully.
                         Job name: ${env.JOB_NAME}
@@ -311,6 +312,8 @@ pipeline {
                         subject: "Jenkins Build Report: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                         to: RECIPIENTS
                     )
+                }
+                
             }
         }
     }
