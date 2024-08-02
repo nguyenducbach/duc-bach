@@ -305,6 +305,10 @@ pipeline {
                 sshagent (credentials: [SSH_CREDENTIALS_ID]) {
                     sh """
                         ssh -o StrictHostKeyChecking=no ${SSH_USER}@${SSH_HOST} '
+                        echo "Current directory:";
+                        pwd;
+                        echo "List of files:";
+                        ls -la;
                         docker-compose down;
                         docker-compose up -d;
                         '
