@@ -102,6 +102,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                        echo "curl -s -u $DOCKERHUB_USERNAME:$DOCKERHUB_PASSWORD https://hub.docker.com/v2/repositories/$DOCKERHUB_REPO/$API_IMAGE/tags/latest/"
+                        echo "docker rmi $DOCKERHUB_REPO/$API_IMAGE:latest || true"
                         def imageExists = sh(
                             script: "curl -s -u $DOCKERHUB_USERNAME:$DOCKERHUB_PASSWORD https://hub.docker.com/v2/repositories/$DOCKERHUB_REPO/$API_IMAGE/tags/latest/",
                             returnStatus: true
