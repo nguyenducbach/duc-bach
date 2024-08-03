@@ -109,6 +109,7 @@ pipeline {
                             returnStatus: true
                         ) == 0
                         if (imageExists) {
+                            sh "image is exist"
                             sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
                             sh "docker rmi $DOCKERHUB_REPO/$API_IMAGE:latest || true"
                             sh "docker pull $DOCKERHUB_REPO/$API_IMAGE:latest || true"
