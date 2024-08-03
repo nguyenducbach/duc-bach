@@ -109,14 +109,9 @@ pipeline {
                             returnStatus: true
                         ) == 0
                         if (imageExists) {
-                            echo "image is exist"
-                            echo "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
                             sh "docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD"
-                            echo "docker rmi $DOCKERHUB_REPO/$API_IMAGE:latest || true"
                             sh "docker rmi $DOCKERHUB_REPO/$API_IMAGE:latest || true"
-                            echo "docker pull $DOCKERHUB_REPO/$API_IMAGE:latest || true"
                             sh "docker pull $DOCKERHUB_REPO/$API_IMAGE:latest || true"
-                            echo "docker rmi $DOCKERHUB_REPO/$API_IMAGE:latest"
                             sh "docker rmi $DOCKERHUB_REPO/$API_IMAGE:latest"
                             echo "Deleted existing API image"
                         } else {
