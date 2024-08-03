@@ -312,7 +312,7 @@ pipeline {
                                 docker stop api-container;
                                 docker rm api-container;
                             fi;
-                            docker run -d --name api-container ${DOCKERHUB_REPO}/${API_IMAGE}:latest;
+                            docker run -d --name api-container -p 80:8080 ${DOCKERHUB_REPO}/${API_IMAGE}:latest;
                         '
                     """
                 }
@@ -361,7 +361,7 @@ pipeline {
                                 docker stop ui-container;
                                 docker rm ui-container;
                             fi;
-                            docker run -d --name ui-container ${DOCKERHUB_REPO}/${UI_IMAGE}:latest;
+                            docker run -d --name ui-container -p 80:8888 ${DOCKERHUB_REPO}/${UI_IMAGE}:latest;
                         '
                     """
                 }
