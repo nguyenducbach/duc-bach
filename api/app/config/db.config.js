@@ -1,5 +1,5 @@
 module.exports = {
-  HOST: "my-db.c1m8ma4sezff.ap-southeast-1.rds.amazonaws.com",
+  HOST: process.env.DB_HOST,
   USER: process.env.DB_USER,
   PASSWORD: process.env.DB_PASSWORD,
   DB: process.env.DB_NAME,
