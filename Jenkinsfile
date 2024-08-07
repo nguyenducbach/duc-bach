@@ -1,3 +1,12 @@
+
+docker run -p 8080:8080 -p 50000:50000 --restart=on-failure 
+jenkins/jenkins:lts
+docker run -p 8080:8080 -p 50000:50000 --restart=on-failure -v
+jenkins_home:/var/jenkins_home -d --name jenkins
+jenkins/jenkins:lts
+docker run -p 8080:8080 -p 50000:50000 --restart=on-failure -v jenkins_home:/var/jenkins_home -d --name jenkins jenkins/jenkins:lts
+https://github.com/VanLeDinh96/nodejs-reactjs
+
 pipeline {
     agent any
     stages{
